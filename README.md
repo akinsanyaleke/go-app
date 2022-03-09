@@ -1,1 +1,1 @@
-# go-sample-app-1
+# go-sample-app-2
