@@ -1,0 +1,24 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: hello-go-web2sandbox-1
+  labels:
+    app.kubernetes.io/part-of: hello-go-web2sandbox-1
+    carto.run/workload-name: hello-go-web2sandbox-1
+    app.kubernetes.io/component: run
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: '1'
+    spec:
+      containers:
+        - name: workload
+          image: leke213.azurecr.io/cartographer-demo-hello-go-web2sandbox-1@sha256:bf2baac6273b0d3353b9396cd656d10c25029910d4937fbb9dda7eff65f36dce
+          env: [{"name": "NAME", "value": "Cartographer ninja"}]
+          ports:
+            - containerPort: 8080
+          securityContext:
+            runAsUser: 1000
+      imagePullSecrets:
+        - name: registry-credentials
